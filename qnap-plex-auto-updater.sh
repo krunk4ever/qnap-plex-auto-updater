@@ -5,6 +5,7 @@ last=$( cat ${current_dir}/last)
 echo "installed: ${last}"
 
 plex_token=$(cat /share/PlexData/Plex\ Media\ Server/Preferences.xml | grep -oP 'PlexOnlineToken="\K[^"]+')
+plex_token=$(cat /share/PlexData/Plex\ Media\ Server/Preferences.xml | grep -oE 'PlexOnlineToken="[^"]+"' | sed -E 's/PlexOnlineToken="([^"]+)"/\1/')
 plex_url="https://plex.tv/api/downloads/5.json?channel=plexpass&X-Plex-Token=${plex_token}"
 echo "Plex URL: ${plex_url}"
 jq_filter=".nas.QNAP.releases[] | select(.build==\"linux-x86_64\") | .url"
